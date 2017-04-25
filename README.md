@@ -13,4 +13,5 @@ docker run \
        -e "DYNU_SERVER=<server>" \
        -e "DYNU_DAEMON_OR_ONESHOT=oneshot" \
        -e "DYNU_AUTOPUBLIC_OR_INTERFACE=autopublic" \
-       ```
+       zeva-dev/ddclient-alpine
+```
