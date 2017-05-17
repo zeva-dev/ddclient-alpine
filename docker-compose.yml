@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  ddclient:
+    image: zeva/ddclient-alpine
+
+    container_name: ddclient
+    hostname: ddclient
+    restart: always
+
+    environment:
+      DDNS_USERNAME: <PUT YOUR DDNS PROVIDER USERNAME HERE>
+      DDNS_PASSWORD: <PUT YOUR DDNS PROVIDER PASSWORD HERE>
+      DDNS_DAEMON_OR_ONESHOT: <daemon -OR- oneshot>
+      DDNS_AUTOPUBLIC_OR_INTERFACE: <autopublic -OR- interface>
+      DDNS_SERVER: <PUT YOUR DDNS PROVIDER'S UPDATE HOSTNAME HERE (e.g. api.dynu.com)>
+      DDNS_DOMAIN: <PUT YOUR DOMAIN NAME HERE (e.g. my.address.net)>
+      DDNS_CHECKIP_URL: <OPTIONAL - URL OF YOUR DDNS PROVIDER'S IP CHECK PAGE (defaults to checkip.dyndns.com)>
+      DDNS_DAEMON_REFRESH_INTERVAL: <OPTIONAL - DAEMON REFRESH INTERVAL IN SECONDS (defaults to 30)>
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
