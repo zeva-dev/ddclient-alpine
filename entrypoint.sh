@@ -13,12 +13,13 @@ ln -s /etc/ddclient.conf /etc/ddclient/ddclient.conf
 : "${DDNS_DOMAIN?Need to set DDNS_DOMAIN env var}"
 : "${DDNS_AUTOPUBLIC_OR_INTERFACE?Need to set DDNS_AUTOPUBLIC_OR_INTERFACE env var, chose autopublic, or a proper interface name such as eth0}"
 
+# Set the web checkip url to the value of the DDNS_CHECKIP_URL environment
+# variable if it's present; default to checkip.dyndns.com if it's not.
 CHECKIP_URL=${DDNS_CHECKIP_URL:-checkip.dyndns.com}
 
 if  [ "$DDNS_AUTOPUBLIC_OR_INTERFACE" = "autopublic" ]
 then
-    echo "use=web, web=checkip.dyndns.com/, web-skip='IP Address'" >> "${CONF_FILE}"
-    #echo "use=web, web=checkip.dynu.com/, web-skip='IP Address'" >>  "${CONF_FILE}"
+    echo "use=web, web=$CHECKIP_URL/, web-skip='IP Address'" >> "${CONF_FILE}"
 else
     INTERFACE_LIST=`cat /proc/net/dev | grep ":" | awk -F ":" '{print $1}' | awk '{$1=$1;print $1}'`
     result=`echo "${INTERFACE_LIST}" | grep "^${DDNS_AUTOPUBLIC_OR_INTERFACE}$" | wc -l`
@@ -36,8 +37,8 @@ sed -i "s/USERNAME/${DDNS_USERNAME}/g" ${CONF_FILE}
 sed -i "s/PASSWORD/${DDNS_PASSWORD}/g" ${CONF_FILE}
 echo "${DDNS_DOMAIN}" >>  "${CONF_FILE}"
 
-# Set the daemon refresh interval if the expected environment
-# variable is present; default to 30 seconds if it's not.
+# Set the daemon refresh interval to the value of the DDNS_DAEMON_REFRESH_INTERVAL
+# environment variable if it's present; default to 30 seconds if it's not.
 DAEMON_REFRESH_INTERVAL=${DDNS_DAEMON_REFRESH_INTERVAL:-30}
 
 if  [ "$DDNS_DAEMON_OR_ONESHOT" = "daemon" ]
