@@ -44,10 +44,10 @@ DAEMON_REFRESH_INTERVAL=${DDNS_DAEMON_REFRESH_INTERVAL:-30}
 if  [ "$DDNS_DAEMON_OR_ONESHOT" = "daemon" ]
 then
     echo "daemon=$DAEMON_REFRESH_INTERVAL" >> ${CONF_FILE}
-    ddclient -foreground -verbose -debug -daemon=$DAEMON_REFRESH_INTERVAL
+    ddclient -foreground -verbose -daemon=$DAEMON_REFRESH_INTERVAL
 elif [ "$DDNS_DAEMON_OR_ONESHOT" = "oneshot" ]
 then
-    ddclient -foreground -verbose -debug -daemon=0
+    ddclient -foreground -verbose -daemon=0
 else
     echo "DDNS_DAEMON_OR_ONESHOT should be set to daemon or to oneshot"
 fi
