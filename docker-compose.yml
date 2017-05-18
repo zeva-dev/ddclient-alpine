@@ -2,7 +2,7 @@ version: '2'
 services:
 
   ddclient:
-    image: zeva/ddclient-alpine
+    image: steasdal/ddclient-alpine
 
     container_name: ddclient
     hostname: ddclient

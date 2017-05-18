@@ -20,7 +20,7 @@ docker run \
        -e "DDNS_AUTOPUBLIC_OR_INTERFACE=autopublic" \
        -e "DDNS_CHECKIP_URL=checkip.dyndns.com" \
        -e "DDNS_DAEMON_REFRESH_INTERVAL=30" \
-       zeva/ddclient-alpine
+       steasdal/ddclient-alpine
 ```
 
 The `DDNS_CHECKIP_URL` and `DDNS_DAEMON_REFRESH_INTERVAL` environment variables are optional and will 
@@ -62,4 +62,4 @@ docker-compose down
 ```
 
 ## Image
-This Docker image lives on the official Docker Hub at [zeva/ddclient-alpine](https://hub.docker.com/r/zeva/ddclient-alpine/)
+This Docker image lives on the official Docker Hub at [steasdal/ddclient-alpine](https://hub.docker.com/r/steasdal/ddclient-alpine/)
