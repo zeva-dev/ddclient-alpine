@@ -61,5 +61,38 @@ Lastly, to tear the container down and toss it in the bin, try this command:
 docker-compose down
 ```
 
+### Deploy to a Kubernetes cluster
+
+You're going to want to know your way around Kubernetes to attempt this.  There are plenty of tutorials and 
+instructional videos out there for those willing to Google 'em.  Give yourself a day or two to get up to speed.
+
+1. Clone this project to a location where **kubectl** can get to it (on your Kubernetes master, for instance).
+2. Update all of the environment variable values in the `deployment.yaml` file.
+3. Update the `username` and `password` fields in the `secret.yaml` file with [Base64 Encoded](https://www.base64encode.org/)
+   versions of your DDNS username and password.
+4. Create the `ddclient-secret` to hold your username and password:
+    ```bash
+    kubectl create -f secret.yaml
+    ```
+5. Create the ddclient-alpine deployment:
+    ```bash
+    kubectl apply -f deployment.yaml
+    ```
+
+Boom!  Just like that, you should be up and running.  Here's a sprinkling of commands that you may want to know:
+
+* `kubectl get all` - See all of the running bits of the deployment.
+* `kubectl describe pod ddclient` - Get all of the juicy deets on the pod where the **ddclient-alpine** container is running.
+* `kubectl describe secret ddclient-secret` - Verify that the **ddclient-secret** secret exists in your Kubernetes environment.
+* `kubectl logs --tail 200 -lapp=ddclient` - Get the last 200 lines of the ddclient log.  Very useful for verifying that the
+   ddclient service actually doing its job.
+* `kubectl delete -f deploymet.yaml` - Shut down the deployment and delete all the bits 'n pieces.  You'll need to run this from
+   the directory where you cloned this project (e.g. the directory where your modified `deployment.yaml` file is located).
+* `kubectl delete -f secret.yaml` - Delete the ddclient-secret that holds your encoded username and password.  Again, you'll
+   need to run this from the directory where your modified `secret.yaml` file resides.
+
+Check out [This document](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/) for some
+insight into what's going on under the covers and, in particular, what this "secret" business is all about.
+
 ## Image
 This Docker image lives on the official Docker Hub at [steasdal/ddclient-alpine](https://hub.docker.com/r/steasdal/ddclient-alpine/)
